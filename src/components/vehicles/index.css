@@ -1,0 +1,35 @@
+.vehicle_card {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    background-image: url("../../assets/main_background_image.jpg");
+    color: white;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    font-size: 22px;
+    font-weight: bold; 
+}
+
+.inside {
+    background-color: rgba(255, 255, 255, 0.247);
+    width: 30%;
+    border-radius: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    word-spacing: 2px;
+    line-height: 2.3;
+}
+
+@media screen and (max-width: 870px) {
+    .inside {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 590px) {
+    .inside {
+        font-size: 14px;
+    }
+}
