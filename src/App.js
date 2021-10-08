@@ -1,20 +1,20 @@
 import React from 'react';
 import Header from './components/header';
-import Container from './components/container';
+import Container from './screens/container';
 import Footer from './components/footer';
-import About from './components/about';
-import People from './components/people';
-import TotalInfoPerson from './components/people/total_info';
-import Planets from './components/planets';
-import TotalInfoPlanet from './components/planets/total_info';
-import Films from './components/films';
-import TotalInfoFilm from './components/films/total_info';
-import Species from './components/species';
-import TotalInfoSpecies from './components/species/total_info';
-import Vehicles from './components/vehicles';
-import TotalInfoVehicle from './components/vehicles/total_info';
-import Starships from './components/starships';
-import TotalInfoStarship from './components/starships/total_info';
+import About from './screens/about';
+import People from './screens/people';
+import TotalInfoPerson from './screens/people/total_info';
+import Planets from './screens/planets';
+import TotalInfoPlanet from './screens/planets/total_info';
+import Films from './screens/films';
+import TotalInfoFilm from './screens/films/total_info';
+import Species from './screens/species';
+import TotalInfoSpecies from './screens/species/total_info';
+import Vehicles from './screens/vehicles';
+import TotalInfoVehicle from './screens/vehicles/total_info';
+import Starships from './screens/starships';
+import TotalInfoStarship from './screens/starships/total_info';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 class App extends React.Component {
