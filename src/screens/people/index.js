@@ -2,27 +2,37 @@ import React, { useState, useEffect} from "react";
 import "./index.css";
 import "../../UI/main_style/index.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getNewPeople, getPeople } from "../../saga/people/actions";
+import { selectPeople } from "../../redux/people/selectors";
 
 const People = () => {
-    const[people, setPeople] = useState([]);
     const [count,setCount] = useState(1);
-    const [addUrl,setAddUrl] = useState(false);
     const [searchPeople, setSearchPeople] = useState("");
 
-    const getPeople = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getPeople", e));
-        setPeople([...people, ...response.results]);
-        setAddUrl(response.next);
+    const dispatch = useDispatch();
+    const peopleSelector = useSelector(selectPeople);
+    const peopleScreen = peopleSelector.people;
+    const addNextUrl = peopleSelector.addUrl;
+
+    const getPeopleScreen = (url) => {
+        dispatch(getPeople(url));
     };
-  
+
+    const getNewPeopleScreen = (addNextUrl) => {
+        dispatch(getNewPeople(addNextUrl));
+    };
+
+    const searchPeopleInput = (event) => {
+        dispatch(setSearchPeople(event.target.value))
+    }
+
     useEffect(() => {
-        getPeople("https://swapi.dev/api/people"); 
+        getPeopleScreen("https://swapi.dev/api/people"); 
     }, []);
     
     useEffect(() => {
-        addUrl && getPeople(addUrl);
+        getNewPeopleScreen(addNextUrl);
     }, [count]);
 
     return (
@@ -32,15 +42,9 @@ const People = () => {
             </div>
             <div>
                 <div className="search_div">
-                    <input type="text" className="search_input" placeholder="Enter the name of the Characters you want to find" onChange={(event) => setSearchPeople(event.target.value)}></input>
+                    <input type="text" className="search_input" placeholder="Enter the name of the Characters you want to find" onChange={searchPeopleInput}></input>
                 </div>           
-                {people?.filter((people) => {
-                    if(searchPeople === "") {
-                        return people
-                    } else if(people.name.toLowerCase().includes(searchPeople.toLowerCase())) {
-                        return people
-                    }
-                }).map((people, i) => {
+                {peopleScreen?.map((people, i) => {
                     let peopleUrl = people.url;
                     var r = /\d+/; 
                     const num = peopleUrl.match(r); 
