@@ -1,16 +1,17 @@
 import React, { useState, useEffect} from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalInfoStarships } from "../../../saga/starships/actions";
+
 
 const TotalInfoStarship = () => {
-    const[starship, setStarship] = useState([]);
     const { num } = useParams();
+    const starship = useSelector(state => state.starships.totalInfo);
+    const dispatch = useDispatch();
 
     const getTotalInfoStarship = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getTotalInfoStarship", e));
-        setStarship(response);
+        dispatch(getTotalInfoStarships(url))
     };
 
     useEffect(() => {
