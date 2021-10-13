@@ -1,16 +1,16 @@
 import React, { useState, useEffect} from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalInfoVehicles } from "../../../saga/vehicles/actions";
 
 const TotalInfoVehicle = () => {
-    const[vehicle, setVehicle] = useState([]);
     const { num } = useParams();
-    
+    const vehicle = useSelector(state => state.vehicles.totalInfo);
+    const dispatch = useDispatch();
+
     const getTotalInfoVehicle = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getTotalInfoVehicle", e));
-        setVehicle(response);
+        dispatch(getTotalInfoVehicles(url))
     };
 
     useEffect(() => {

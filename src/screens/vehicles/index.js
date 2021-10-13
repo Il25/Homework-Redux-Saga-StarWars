@@ -2,27 +2,37 @@ import React, { useState, useEffect} from "react";
 import "./index.css";
 import "../../UI/main_style/index.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getNewVehicles, getVehicles, getSearchVehicles } from "../../saga/vehicles/actions";
 
 const Vehicles = () => {
-    const[vehicles, setVehicles] = useState([]);
     const [count,setCount] = useState(1);
-    const [addUrl,setAddUrl] = useState(false);
-    const [searchVehicles, setSearchVehicles] = useState("");
+    const [searchView, setSearchView] = useState(false);
 
-    const getVehicles = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getVehicles", e));
-        setVehicles([...vehicles, ...response.results]);
-        setAddUrl(response.next);
+    const dispatch = useDispatch();
+    const vehiclesScreen = useSelector(state => state.vehicles.vehicles);
+    const addNextUrl = useSelector(state => state.vehicles.addUrl);
+    const searchVehicles = useSelector(state => state.vehicles.searchVehicles);
+    
+    const getNewVehiclesScreen = () => {
+        dispatch(getNewVehicles(addNextUrl));
+    };  
+     
+    const searchVehiclesInput = (event) => {
+        if(event){
+            setSearchView(true)
+            dispatch(getSearchVehicles(event.target.value)) 
+        }
     };
 
+    useEffect(()=>{
+        dispatch(getVehicles())
+    },[dispatch]);
+    
     useEffect(() => {
-        getVehicles("https://swapi.dev/api/vehicles");
-    }, []);
-
-    useEffect(() => {
-       addUrl && getVehicles(addUrl);
+        if(addNextUrl) {
+            getNewVehiclesScreen(addNextUrl);
+        }
     }, [count]);
 
     return (
@@ -32,30 +42,43 @@ const Vehicles = () => {
             </div>
             <div>
                 <div className="search_div">
-                    <input type="text" className="search_input" placeholder="Enter the name of the Vehicles you want to find" onChange={(event) => setSearchVehicles(event.target.value)}></input>
+                    <input type="text" className="search_input" placeholder="Enter the name of the Vehicles you want to find" onChange={searchVehiclesInput}></input>
                 </div>
-                {vehicles?.filter((vehicles) => {
-                    if(searchVehicles === "") {
-                        return vehicles
-                    } else if(vehicles.name.toLowerCase().includes(searchVehicles.toLowerCase())) {
-                        return vehicles
-                    }
-                }).map((vehicles, i) => {
-                    let vehicleUrl = vehicles.url;
-                    var r = /\d+/; 
-                    const num = vehicleUrl.match(r); 
-                    return (
-                        <div key={i} className="columns">
-                            <div>
-                                <p className="name">
-                                    <Link to={`/vehicles/${num[0]}`}>
-                                        {vehicles.name}
-                                    </Link>
-                                </p>
-                            </div>
-                        </div>  
-                    ) 
-                })}
+                {searchView ?
+                    searchVehicles?.map((vehicles, i) => {
+                        let vehicleUrl = vehicles.url;
+                        let r = /\d+/; 
+                        const num = vehicleUrl.match(r); 
+                        return (
+                            <div key={i} className="columns">
+                                    <div>
+                                    <p className="name">
+                                        <Link to={`/vehicles/${num[0]}`}>
+                                            {vehicles.name}
+                                        </Link>
+                                    </p>
+                                </div>
+                            </div>  
+                        ) 
+                    })
+                :
+                    vehiclesScreen?.map((vehicles, i) => {
+                        let vehicleUrl = vehicles.url;
+                        let r = /\d+/; 
+                        const num = vehicleUrl.match(r); 
+                        return (
+                            <div key={i} className="columns">
+                                    <div>
+                                    <p className="name">
+                                        <Link to={`/vehicles/${num[0]}`}>
+                                            {vehicles.name}
+                                        </Link>
+                                    </p>
+                                </div>
+                            </div>  
+                        ) 
+                    })
+                }
                 <button className="addMore_button" disabled={count > 3} onClick={() => setCount(count + 1)}>Add more</button> 
             </div>       
         </div>
