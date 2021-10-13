@@ -27,8 +27,8 @@ export function* getNewVehiclesWatcher() {
     yield takeEvery(actionTypesSaga.ADD_NEXT_PAGE_OF_VEHICLES, getNewVehiclesWorker);
 };
 
-function* getSearchVehiclesWorker() {
-    yield put(setSearchVehicles(result));
+function* getSearchVehiclesWorker({ payload }) {
+    yield put(setSearchVehicles(payload));
 };
 
 export function* getSearchVehiclesWatcher() {
