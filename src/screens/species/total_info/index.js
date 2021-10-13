@@ -1,20 +1,20 @@
 import React, { useState, useEffect} from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalInfoSpecies } from "../../../saga/species/actions";
 
 const TotalInfoSpecies = () => {
-    const[species, setSpecies] = useState([]);
     const { num } = useParams();
+    const species = useSelector(state => state.species.totalInfo);
+    const dispatch = useDispatch();
 
-    const getTotalInfoSpecies = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getTotalInfoSpecies", e));
-        setSpecies(response);
+    const getTotalInfoSpeciesScreen = async(url) => {
+        dispatch(getTotalInfoSpecies(url))
     };
 
     useEffect(() => {
-        getTotalInfoSpecies(`https://swapi.dev/api/species/${num}`);
+        getTotalInfoSpeciesScreen(`https://swapi.dev/api/species/${num}`);
     }, []);
 
     return (

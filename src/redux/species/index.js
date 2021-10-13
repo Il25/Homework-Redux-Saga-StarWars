@@ -24,7 +24,7 @@ export function speciesReducer (state = initialState, action) {
         case actionTypes.SET_SEARCH_SPECIES:
             return {
                 ...state,
-                searchPeople: state.species?.filter((species) => {
+                searchSpecies: state.species?.filter((species) => {
                     if(action.payload === "") {
                         return species
                     } else if(species.name.toLowerCase().includes(action.payload.toLowerCase())) {
