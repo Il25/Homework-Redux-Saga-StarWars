@@ -2,21 +2,26 @@ import React, { useState, useEffect} from "react";
 import "./index.css";
 import "../../UI/main_style/index.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getFilms, getSearchFilms } from "../../saga/films/actions";
 
 const Films = () => {
-    const[films, setFilms] = useState([]);
-    const [searchFilms, setSearchFilms] = useState("");
+    const [searchView, setSearchView] = useState(false);
 
-    const getFilms = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getFilms", e));
-        setFilms([...films, ...response.results]);
+    const dispatch = useDispatch();
+    const filmsScreen = useSelector(state => state.films.films);
+    const searchFilms = useSelector(state => state.films.searchFilms);
+     
+    const searchFilmsInput = (event) => {
+        if(event){
+            setSearchView(true)
+            dispatch(getSearchFilms(event.target.value)) 
+        }              
     };
 
-    useEffect(() => {
-        getFilms("https://swapi.dev/api/films");
-    }, []);
+    useEffect(()=>{
+        dispatch(getFilms())
+    },[dispatch]);
 
     return (
         <div className="search_container">
@@ -25,30 +30,43 @@ const Films = () => {
             </div>
             <div className="films_container">
                 <div className="search_div">
-                    <input type="text" className="search_input" placeholder="Enter the name of the Films you want to find" onChange={(event) => setSearchFilms(event.target.value)}></input>
+                    <input type="text" className="search_input" placeholder="Enter the name of the Films you want to find" onChange={searchFilmsInput}></input>
                 </div>
-                {films?.filter((films) => {
-                    if(searchFilms === "") {
-                        return films
-                    } else if(films.title.toLowerCase().includes(searchFilms.toLowerCase())) {
-                        return films
-                    }
-                }).map((films, i) => {
-                    let filmUrl = films.url;
-                    var r = /\d+/; 
-                    const num = filmUrl.match(r); 
-                    return (
-                        <div  key={i} className="columns films">
-                            <div>
-                                <p className="name">
-                                    <Link to={`/films/${num[0]}`}>
-                                        {films.title}
-                                    </Link>
-                                </p>
-                            </div>
-                        </div> 
-                    )
-                })} 
+                {searchView ?
+                    searchFilms?.map((films, i) => {
+                        let filmUrl = films.url;
+                        let r = /\d+/; 
+                        const num = filmUrl.match(r); 
+                        return (
+                            <div  key={i} className="columns films">
+                                <div>
+                                    <p className="name">
+                                        <Link to={`/films/${num[0]}`}>
+                                            {films.title}
+                                        </Link>
+                                    </p>
+                                </div>
+                            </div> 
+                        )
+                    })
+                :
+                    filmsScreen?.map((films, i) => {
+                        let filmUrl = films.url;
+                        let r = /\d+/; 
+                        const num = filmUrl.match(r); 
+                        return (
+                            <div key={i} className="columns films">
+                                <div>
+                                    <p className="name">
+                                        <Link to={`/films/${num[0]}`}>
+                                            {films.title}
+                                        </Link>
+                                    </p>
+                                </div>
+                            </div> 
+                        )
+                    })
+                } 
             </div>       
         </div>
     );

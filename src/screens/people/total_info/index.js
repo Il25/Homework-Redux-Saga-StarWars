@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTotalInfoPeople } from "../../../saga/people/actions";
 
 const TotalInfoPerson = () => {
-    // const[person, setPerson] = useState([]);
     const { num } = useParams();
     const person = useSelector(state => state.people.totalInfo);
     const dispatch = useDispatch();

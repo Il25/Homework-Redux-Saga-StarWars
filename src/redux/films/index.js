@@ -20,7 +20,7 @@ export function filmsReducer (state = initialState, action) {
                 searchFilms: state.films?.filter((films) => {
                     if(action.payload === "") {
                         return films
-                    } else if(films.name.toLowerCase().includes(action.payload.toLowerCase())) {
+                    } else if(films.title.toLowerCase().includes(action.payload.toLowerCase())) {
                         return films
                     }
                 })

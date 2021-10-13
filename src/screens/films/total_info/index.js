@@ -1,18 +1,17 @@
 import React, { useState, useEffect} from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
+import { getTotalInfoFilms } from "../../../saga/films/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const TotalInfoFilm = () => {
-    const[film, setFilm] = useState([]);
     const { num } = useParams();
+    const film = useSelector(state => state.films.totalInfo);
+    const dispatch = useDispatch();
 
     const getTotalInfoFilm = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getTotalInfoFilm", e));
-        setFilm(response);
+        dispatch(getTotalInfoFilms(url))
     };
-
     useEffect(() => {
         getTotalInfoFilm(`https://swapi.dev/api/films/${num}`);
     }, []);

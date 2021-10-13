@@ -50,7 +50,7 @@ const People = () => {
                         let r = /\d+/; 
                         const num = peopleUrl.match(r); 
                         return (
-                            <div  key={i} className="columns">
+                            <div key={i} className="columns">
                                 <div>
                                     <p className="name" >
                                         <Link to={`/people/${num[0]}`}> 
