@@ -1,16 +1,17 @@
 import React, { useState, useEffect} from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalInfoPeople } from "../../../saga/people/actions";
 
 const TotalInfoPerson = () => {
-    const[person, setPerson] = useState([]);
+    // const[person, setPerson] = useState([]);
     const { num } = useParams();
+    const person = useSelector(state => state.people.totalInfo);
+    const dispatch = useDispatch();
 
     const getTotalInfoPerson = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getTotalInfoPerson", e));
-        setPerson(response);
+        dispatch(getTotalInfoPeople(url))
     };
 
     useEffect(() => {

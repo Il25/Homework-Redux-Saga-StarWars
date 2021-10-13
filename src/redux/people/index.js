@@ -9,19 +9,19 @@ const initialState = {
 
 export function peopleReducer (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_PEOPLE:
+        case actionTypes.SET_PEOPLE:
             return {
                 ...state,
                 people: [...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.ADD_NEXT_PAGE_OF_PEOPLE:
+        case actionTypes.SET_NEXT_PAGE_OF_PEOPLE:
             return {
                 ...state,
                 people: [...state.people, ...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.SEARCH_PEOPLE:
+        case actionTypes.SET_SEARCH_PEOPLE:
             return {
                 ...state,
                 searchPeople: state.people?.filter((people) => {
@@ -32,10 +32,10 @@ export function peopleReducer (state = initialState, action) {
                     }
                 })
             }    
-        case actionTypes.GET_TOTAL_INFO_OF_PEOPLE:
+        case actionTypes.SET_TOTAL_INFO_OF_PEOPLE:
             return {
                 ...state,
-                totalInfo: {...action.payload}
+                totalInfo: {...action.payload},
             }
         default:
             return state;

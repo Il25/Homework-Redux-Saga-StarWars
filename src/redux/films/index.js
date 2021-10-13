@@ -8,12 +8,12 @@ const initialState = {
 
 export function filmsReducer (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_FILMS:
+        case actionTypes.SET_FILMS:
             return {
                 ...state,
                 films: [...action.payload.results],
             }
-        case actionTypes.SEARCH_FILMS:
+        case actionTypes.SET_SEARCH_FILMS:
             return {
                 ...state,
                 searchFilms: state.films?.filter((films) => {
@@ -24,7 +24,7 @@ export function filmsReducer (state = initialState, action) {
                     }
                 })
             }    
-        case actionTypes.GET_TOTAL_INFO_OF_FILMS:
+        case actionTypes.SET_TOTAL_INFO_OF_FILMS:
             return {
                 ...state,
                 totalInfo: {...action.payload}

@@ -9,19 +9,19 @@ const initialState = {
 
 export function planetsReducer (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_PLANETS:
+        case actionTypes.SET_PLANETS:
             return {
                 ...state,
                 planets: [...action.payload.results],
                 addUrl: action.payload.next
             }
-        case actionTypes.ADD_NEXT_PAGE_OF_PLANETS:
+        case actionTypes.SET_NEXT_PAGE_OF_PLANETS:
             return {
                 ...state,
                 planets: [...state.planets, ...action.payload.results],
                 addUrl: action.payload.next
             }
-        case actionTypes.SEARCH_PLANETS:
+        case actionTypes.SET_SEARCH_PLANETS:
             return {
                 ...state,
                 searchPlanets: state.planets?.filter((planets) => {
@@ -32,7 +32,7 @@ export function planetsReducer (state = initialState, action) {
                     }
                 })
             }    
-        case actionTypes.GET_TOTAL_INFO_OF_PLANETS:
+        case actionTypes.SET_TOTAL_INFO_OF_PLANETS:
             return {
                 ...state,
                 totalInfo: {...action.payload}
