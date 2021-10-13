@@ -1,0 +1,5 @@
+export const actionTypes = {
+    SET_FILMS: "SET_FILMS",
+    SET_SEARCH_FILMS: "SET_SEARCH_FILMS",
+    SET_TOTAL_INFO_OF_FILMS: "SET_TOTAL_INFO_OF_FILMS",
+};

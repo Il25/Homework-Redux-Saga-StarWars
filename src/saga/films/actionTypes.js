@@ -1,0 +1,5 @@
+export const actionTypesSaga = {
+    GET_FILMS: "GET_FILMS",
+    SEARCH_FILMS: "SEARCH_FILMS",
+    GET_TOTAL_INFO_OF_FILMS: "GET_TOTAL_INFO_OF_FILMS"
+};

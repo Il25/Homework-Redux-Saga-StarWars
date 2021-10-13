@@ -1,0 +1,33 @@
+import { spawn } from "redux-saga/effects";
+import { getNewPeopleWatcher, getSearchPeopleWatcher, getTotalInfoPeopleWatcher, peopleWatcher } from "./people";
+import { getSearchFilmsWatcher, getTotalInfoFilmsWatcher, filmsWatcher } from "./films";
+import { getNewPlanetsWatcher, getSearchPlanetsWatcher, getTotalInfoPlanetsWatcher, planetsWatcher } from "./planets";
+import { getNewSpeciesWatcher, getSearchSpeciesWatcher, getTotalInfoSpeciesWatcher, speciesWatcher } from "./species";
+import { getNewStarshipsWatcher, getSearchStarshipsWatcher, getTotalInfoStarshipsWatcher, starshipsWatcher } from "./starships";
+import { getNewVehiclesWatcher, getSearchVehiclesWatcher, getTotalInfoVehiclesWatcher, vehiclesWatcher } from "./vehicles";
+
+export function* rootSaga () {
+    yield spawn(peopleWatcher);
+    yield spawn(getNewPeopleWatcher);
+    yield spawn(getSearchPeopleWatcher);
+    yield spawn(getTotalInfoPeopleWatcher);
+    yield spawn(filmsWatcher);
+    yield spawn(getSearchFilmsWatcher);
+    yield spawn(getTotalInfoFilmsWatcher);
+    yield spawn(planetsWatcher);
+    yield spawn(getNewPlanetsWatcher);
+    yield spawn(getSearchPlanetsWatcher);
+    yield spawn(getTotalInfoPlanetsWatcher);
+    yield spawn(speciesWatcher);
+    yield spawn(getNewSpeciesWatcher);
+    yield spawn(getSearchSpeciesWatcher);
+    yield spawn(getTotalInfoSpeciesWatcher);
+    yield spawn(starshipsWatcher);
+    yield spawn(getNewStarshipsWatcher);
+    yield spawn(getSearchStarshipsWatcher);
+    yield spawn(getTotalInfoStarshipsWatcher);
+    yield spawn(vehiclesWatcher);
+    yield spawn(getNewVehiclesWatcher);
+    yield spawn(getSearchVehiclesWatcher);
+    yield spawn(getTotalInfoVehiclesWatcher);
+};
