@@ -1,16 +1,16 @@
 import React, { useState, useEffect} from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalInfoPlanets } from "../../../saga/planets/actions";
 
 const TotalInfoPlanet = () => {
-    const[planet, setPlanet] = useState([]);
     const { num } = useParams();
+    const planet = useSelector(state => state.planets.totalInfo);
+    const dispatch = useDispatch();
 
     const getTotalInfoPlanet = async(url) => {
-        const response = await fetch(url)
-            .then((res) => res.json())
-            .catch((e) => console.log("getTotalInfoPlanet", e));
-        setPlanet(response);
+        dispatch(getTotalInfoPlanets(url))
     };
 
     useEffect(() => {
