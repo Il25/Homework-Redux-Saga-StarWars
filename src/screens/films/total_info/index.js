@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useEffect } from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
 import { getTotalInfoFilms } from "../../../saga/films/actions";
@@ -10,8 +10,9 @@ const TotalInfoFilm = () => {
     const dispatch = useDispatch();
 
     const getTotalInfoFilm = async(url) => {
-        dispatch(getTotalInfoFilms(url))
+        dispatch(getTotalInfoFilms(url));
     };
+
     useEffect(() => {
         getTotalInfoFilm(`https://swapi.dev/api/films/${num}`);
     }, []);

@@ -20,13 +20,13 @@ const Starships = () => {
      
     const searchStarshipsInput = (event) => {
         if(event){
-            setSearchView(true)
-            dispatch(getSearchStarships(event.target.value)) 
+            setSearchView(true);
+            dispatch(getSearchStarships(event.target.value));
         }              
     };
 
     useEffect(()=>{
-        dispatch(getStarships())
+        dispatch(getStarships());
     },[dispatch]);
     
     useEffect(() => {

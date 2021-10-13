@@ -20,13 +20,13 @@ const Planets = () => {
      
     const searchPlanetsInput = (event) => {
         if(event){
-            setSearchView(true)
-            dispatch(getSearchPlanets(event.target.value)) 
+            setSearchView(true);
+            dispatch(getSearchPlanets(event.target.value)) ;
         }              
     };
 
     useEffect(()=>{
-        dispatch(getPlanets())
+        dispatch(getPlanets());
     },[dispatch]);
     
     useEffect(() => {

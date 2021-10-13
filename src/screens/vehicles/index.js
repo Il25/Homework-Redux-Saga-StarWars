@@ -20,13 +20,13 @@ const Vehicles = () => {
      
     const searchVehiclesInput = (event) => {
         if(event){
-            setSearchView(true)
-            dispatch(getSearchVehicles(event.target.value)) 
+            setSearchView(true);
+            dispatch(getSearchVehicles(event.target.value)) ;
         }
     };
 
     useEffect(()=>{
-        dispatch(getVehicles())
+        dispatch(getVehicles());
     },[dispatch]);
     
     useEffect(() => {

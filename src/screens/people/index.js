@@ -20,13 +20,13 @@ const People = () => {
      
     const searchPeopleInput = (event) => {
         if(event){
-            setSearchView(true)
-            dispatch(getSearchPeople(event.target.value)) 
+            setSearchView(true);
+            dispatch(getSearchPeople(event.target.value)); 
         }              
     };
 
     useEffect(()=>{
-        dispatch(getPeople())
+        dispatch(getPeople());
     },[dispatch]);
     
     useEffect(() => {

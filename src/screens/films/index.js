@@ -14,13 +14,13 @@ const Films = () => {
      
     const searchFilmsInput = (event) => {
         if(event){
-            setSearchView(true)
-            dispatch(getSearchFilms(event.target.value)) 
+            setSearchView(true);
+            dispatch(getSearchFilms(event.target.value));
         }              
     };
 
     useEffect(()=>{
-        dispatch(getFilms())
+        dispatch(getFilms());
     },[dispatch]);
 
     return (

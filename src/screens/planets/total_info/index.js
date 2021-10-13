@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useEffect } from "react";
 import "../index";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,7 @@ const TotalInfoPlanet = () => {
     const dispatch = useDispatch();
 
     const getTotalInfoPlanet = async(url) => {
-        dispatch(getTotalInfoPlanets(url))
+        dispatch(getTotalInfoPlanets(url));
     };
 
     useEffect(() => {

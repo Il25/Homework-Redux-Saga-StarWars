@@ -20,13 +20,13 @@ const Species = () => {
      
     const searchSpeciesInput = (event) => {
         if(event){
-            setSearchView(true)
-            dispatch(getSearchSpecies(event.target.value)) 
+            setSearchView(true);
+            dispatch(getSearchSpecies(event.target.value)) ;
         }              
     };
 
     useEffect(()=>{
-        dispatch(getSpecies())
+        dispatch(getSpecies());
     },[dispatch]);
     
     useEffect(() => {
