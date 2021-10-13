@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { setNewSpecies, setSpecies, setSearchSpecies } from "../../redux/species/actions";
+import { setNewSpecies, setSpecies, setSearchSpecies, setTotalInfoSpecies } from "../../redux/species/actions";
 import { actionTypesSaga } from "./actionTypes";
 
 const getSpecies = async(url) => {
@@ -9,8 +9,8 @@ const getSpecies = async(url) => {
     return response;    
 };
 
-function* speciesWorker ({payload}) {
-    const result = yield call(getSpecies, payload);
+function* speciesWorker () {
+    const result = yield call(getSpecies, "https://swapi.dev/api/species/");
     yield put(setSpecies(result));
 };
 
@@ -28,18 +28,25 @@ export function* getNewSpeciesWatcher() {
 };
 
 function* getSearchSpeciesWorker({ payload }) {
-    const result = yield call(getSpecies, payload);
-    yield put(setSearchSpecies(result));
+    yield put(setSearchSpecies(payload));
 };
 
 export function* getSearchSpeciesWatcher() {
-    yield takeEvery(actionTypesSaga.SEARCH_SPECIES, getSearchSpeciesWorker)
+    yield takeEvery(actionTypesSaga.SEARCH_SPECIES, getSearchSpeciesWorker);
+};
+
+const getTotalinfo = async(num) => {
+    const response = await fetch(num)
+        .then(res => res.json())
+        .catch(e => console.warn("getTotalInfo", e));
+    return response;
 };
 
 function* getTotalInfoSpeciesWorker({ payload }) {
-    yield put(actionTypesSaga.GET_TOTAL_INFO_OF_SPECIES, {payload})
+    const result = yield call(getTotalinfo, payload);
+    yield put(setTotalInfoSpecies(result));
 };
 
 export function* getTotalInfoSpeciesWatcher() {
-    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_SPECIES, getTotalInfoSpeciesWorker)
+    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_SPECIES, getTotalInfoSpeciesWorker);
 };

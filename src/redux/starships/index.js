@@ -9,19 +9,19 @@ const initialState = {
 
 export function starshipsReducer (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_STARSHIPS:
+        case actionTypes.SET_STARSHIPS:
             return {
                 ...state,
                 starships: [...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.ADD_NEXT_PAGE_OF_STARSHIPS:
+        case actionTypes.SET_NEXT_PAGE_OF_STARSHIPS:
             return {
                 ...state,
                 starships: [...state.starships, ...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.SEARCH_STARSHIPS:
+        case actionTypes.SET_SEARCH_STARSHIPS:
             return {
                 ...state,
                 searchStarships: state.starships?.filter((starships) => {
@@ -32,10 +32,10 @@ export function starshipsReducer (state = initialState, action) {
                     }
                 })
             }    
-        case actionTypes.GET_TOTAL_INFO_OF_STARSHIPS:
+        case actionTypes.SET_TOTAL_INFO_OF_STARSHIPS:
             return {
                 ...state,
-                totalInfo: {...action.payload}
+                totalInfo: {...action.payload},
             }
         default:
             return state;

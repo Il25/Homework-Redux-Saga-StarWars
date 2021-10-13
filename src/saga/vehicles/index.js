@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { setNewVehicles, setVehicles, setSearchVehicles } from "../../redux/vehicles/actions";
+import { setNewVehicles, setVehicles, setSearchVehicles, setTotalInfoVehicles } from "../../redux/vehicles/actions";
 import { actionTypesSaga } from "./actionTypes";
 
 const getVehicles = async(url) => {
@@ -9,8 +9,8 @@ const getVehicles = async(url) => {
     return response;    
 };
 
-function* vehiclesWorker ({payload}) {
-    const result = yield call(getVehicles, payload);
+function* vehiclesWorker () {
+    const result = yield call(getVehicles, "https://swapi.dev/api/vehicles/");
     yield put(setVehicles(result));
 };
 
@@ -27,19 +27,26 @@ export function* getNewVehiclesWatcher() {
     yield takeEvery(actionTypesSaga.ADD_NEXT_PAGE_OF_VEHICLES, getNewVehiclesWorker);
 };
 
-function* getSearchVehiclesWorker({ payload }) {
-    const result = yield call(getVehicles, payload);
+function* getSearchVehiclesWorker() {
     yield put(setSearchVehicles(result));
 };
 
 export function* getSearchVehiclesWatcher() {
-    yield takeEvery(actionTypesSaga.SEARCH_VEHICLES, getSearchVehiclesWorker)
+    yield takeEvery(actionTypesSaga.SEARCH_VEHICLES, getSearchVehiclesWorker);
+};
+
+const getTotalinfo = async(num) => {
+    const response = await fetch(num)
+        .then(res => res.json())
+        .catch(e => console.warn("getTotalInfo", e));
+    return response;
 };
 
 function* getTotalInfoVehiclesWorker({ payload }) {
-    yield put(actionTypesSaga.GET_TOTAL_INFO_OF_VEHICLES, {payload})
+    const result = yield call(getTotalinfo, payload);
+    yield put(setTotalInfoVehicles(result));
 };
 
 export function* getTotalInfoVehiclesWatcher() {
-    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_VEHICLES, getTotalInfoVehiclesWorker)
+    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_VEHICLES, getTotalInfoVehiclesWorker);
 };

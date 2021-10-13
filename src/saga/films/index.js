@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { setFilms, setSearchFilms } from "../../redux/films/actions";
+import { setFilms, setSearchFilms, setTotalInfoFilms } from "../../redux/films/actions";
 import { actionTypesSaga } from "./actionTypes";
 
 const getFilms = async(url) => {
@@ -9,8 +9,8 @@ const getFilms = async(url) => {
     return response;    
 };
 
-function* filmsWorker ({payload}) {
-    const result = yield call(getFilms, payload);
+function* filmsWorker () {
+    const result = yield call(getFilms, "https://swapi.dev/api/films/");
     yield put(setFilms(result));
 };
 
@@ -19,18 +19,25 @@ export function* filmsWatcher () {
 };
 
 function* getSearchFilmsWorker({ payload }) {
-    const result = yield call(getFilms, payload);
-    yield put(setSearchFilms(result));
+    yield put(setSearchFilms(payload));
 };
 
 export function* getSearchFilmsWatcher() {
-    yield takeEvery(actionTypesSaga.SEARCH_FILMS, getSearchFilmsWorker)
+    yield takeEvery(actionTypesSaga.SEARCH_FILMS, getSearchFilmsWorker);
+};
+
+const getTotalinfo = async(num) => {
+    const response = await fetch(num)
+        .then(res => res.json())
+        .catch(e => console.warn("getTotalInfo", e));
+    return response;
 };
 
 function* getTotalInfoFilmsWorker({ payload }) {
-    yield put(actionTypesSaga.GET_TOTAL_INFO_OF_FILMS, {payload})
-};
+    const result = yield call(getTotalinfo, payload);
+    yield put(setTotalInfoFilms(result));
+};    
 
 export function* getTotalInfoFilmsWatcher() {
-    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_FILMS, getTotalInfoFilmsWorker)
+    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_FILMS, getTotalInfoFilmsWorker);
 };

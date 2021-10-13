@@ -9,19 +9,19 @@ const initialState = {
 
 export function vehiclesReducer (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_VEHICLES:
+        case actionTypes.SET_VEHICLES:
             return {
                 ...state,
                 vehicles: [...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.ADD_NEXT_PAGE_OF_VEHICLES:
+        case actionTypes.SET_NEXT_PAGE_OF_VEHICLES:
             return {
                 ...state,
                 vehicles: [...state.vehicles, ...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.SEARCH_VEHICLES:
+        case actionTypes.SET_SEARCH_VEHICLES:
             return {
                 ...state,
                 searchVehicles: state.vehicles?.filter((vehicles) => {
@@ -32,10 +32,10 @@ export function vehiclesReducer (state = initialState, action) {
                     }
                 })
             }    
-        case actionTypes.GET_TOTAL_INFO_OF_VEHICLES:
+        case actionTypes.SET_TOTAL_INFO_OF_VEHICLES:
             return {
                 ...state,
-                totalInfo: {...action.payload}
+                totalInfo: {...action.payload},
             }
         default:
             return state;

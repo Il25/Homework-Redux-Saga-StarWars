@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { setNewStarships, setStarships, setSearchStarships } from "../../redux/starships/actions";
+import { setNewStarships, setStarships, setSearchStarships, setTotalInfoStarships } from "../../redux/starships/actions";
 import { actionTypesSaga } from "./actionTypes";
 
 const getStarships = async(url) => {
@@ -9,8 +9,8 @@ const getStarships = async(url) => {
     return response;    
 };
 
-function* starshipsWorker ({payload}) {
-    const result = yield call(getStarships, payload);
+function* starshipsWorker () {
+    const result = yield call(getStarships, "https://swapi.dev/api/starships/");
     yield put(setStarships(result));
 };
 
@@ -28,18 +28,25 @@ export function* getNewStarshipsWatcher() {
 };
 
 function* getSearchStarshipsWorker({ payload }) {
-    const result = yield call(getStarships, payload);
-    yield put(setSearchStarships(result));
+    yield put(setSearchStarships(payload));
 };
 
 export function* getSearchStarshipsWatcher() {
-    yield takeEvery(actionTypesSaga.SEARCH_STARSHIPS, getSearchStarshipsWorker)
+    yield takeEvery(actionTypesSaga.SEARCH_STARSHIPS, getSearchStarshipsWorker);
+};
+
+const getTotalinfo = async(num) => {
+    const response = await fetch(num)
+        .then(res => res.json())
+        .catch(e => console.warn("getTotalInfo", e));
+    return response;
 };
 
 function* getTotalInfoStarshipsWorker({ payload }) {
-    yield put(actionTypesSaga.GET_TOTAL_INFO_OF_STARSHIPS, {payload})
+    const result = yield call(getTotalinfo, payload);
+    yield put(setTotalInfoStarships(result));
 };
 
 export function* getTotalInfoStarshipsWatcher() {
-    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_STARSHIPS, getTotalInfoStarshipsWorker)
+    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_STARSHIPS, getTotalInfoStarshipsWorker);
 };

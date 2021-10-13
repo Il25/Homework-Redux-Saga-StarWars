@@ -32,7 +32,7 @@ function* getSearchPeopleWorker({ payload }) {
 };
 
 export function* getSearchPeopleWatcher() {
-    yield takeEvery(actionTypesSaga.SEARCH_PEOPLE, getSearchPeopleWorker)
+    yield takeEvery(actionTypesSaga.SEARCH_PEOPLE, getSearchPeopleWorker);
 };
 
 const getTotalinfo = async(num) => {
@@ -43,8 +43,8 @@ const getTotalinfo = async(num) => {
 };
 
 function* getTotalInfoPeopleWorker({ payload }) {
-    const result = yield call(getTotalinfo, payload)
-    yield put(setTotalInfoPeople(result))
+    const result = yield call(getTotalinfo, payload);
+    yield put(setTotalInfoPeople(result));
 };
 
 export function* getTotalInfoPeopleWatcher() {

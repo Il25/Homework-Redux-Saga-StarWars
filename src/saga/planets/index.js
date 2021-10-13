@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { setNewPlanets, setPlanets, setSearchPlanets } from "../../redux/planets/actions";
+import { setNewPlanets, setPlanets, setSearchPlanets, setTotalInfoPlanets } from "../../redux/planets/actions";
 import { actionTypesSaga } from "./actionTypes";
 
 const getPlanets = async(url) => {
@@ -9,8 +9,8 @@ const getPlanets = async(url) => {
     return response;    
 };
 
-function* planetsWorker ({payload}) {
-    const result = yield call(getPlanets, payload);
+function* planetsWorker () {
+    const result = yield call(getPlanets, "https://swapi.dev/api/planets/");
     yield put(setPlanets(result));
 };
 
@@ -28,18 +28,25 @@ export function* getNewPlanetsWatcher() {
 };
 
 function* getSearchPlanetsWorker({ payload }) {
-    const result = yield call(getPlanets, payload);
-    yield put(setSearchPlanets(result));
+    yield put(setSearchPlanets(payload));
 };
 
 export function* getSearchPlanetsWatcher() {
-    yield takeEvery(actionTypesSaga.SEARCH_PLANETS, getSearchPlanetsWorker)
+    yield takeEvery(actionTypesSaga.SEARCH_PLANETS, getSearchPlanetsWorker);
+};
+
+const getTotalinfo = async(num) => {
+    const response = await fetch(num)
+        .then(res => res.json())
+        .catch(e => console.warn("getTotalInfo", e));
+    return response;
 };
 
 function* getTotalInfoPlanetsWorker({ payload }) {
-    yield put(actionTypesSaga.GET_TOTAL_INFO_OF_PLANETS, {payload})
+    const result = yield call(getTotalinfo, payload);
+    yield put(setTotalInfoPlanets(result));
 };
 
 export function* getTotalInfoPlanetsWatcher() {
-    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_PLANETS, getTotalInfoPlanetsWorker)
+    yield takeEvery(actionTypesSaga.GET_TOTAL_INFO_OF_PLANETS, getTotalInfoPlanetsWorker);
 };

@@ -1,1 +1,0 @@
-export const selectSpecies = (state) => state.species.data;

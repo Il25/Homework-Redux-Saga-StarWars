@@ -12,6 +12,7 @@ export function filmsReducer (state = initialState, action) {
             return {
                 ...state,
                 films: [...action.payload.results],
+                addUrl: action.payload.next,
             }
         case actionTypes.SET_SEARCH_FILMS:
             return {

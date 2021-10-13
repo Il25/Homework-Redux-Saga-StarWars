@@ -9,19 +9,19 @@ const initialState = {
 
 export function speciesReducer (state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_SPECIES:
+        case actionTypes.SET_SPECIES:
             return {
                 ...state,
                 species: [...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.ADD_NEXT_PAGE_OF_SPECIES:
+        case actionTypes.SET_NEXT_PAGE_OF_SPECIES:
             return {
                 ...state,
                 species: [...state.species, ...action.payload.results],
-                addUrl: action.payload.next
+                addUrl: action.payload.next,
             }
-        case actionTypes.SEARCH_SPECIES:
+        case actionTypes.SET_SEARCH_SPECIES:
             return {
                 ...state,
                 searchPeople: state.species?.filter((species) => {
@@ -32,10 +32,10 @@ export function speciesReducer (state = initialState, action) {
                     }
                 })
             }    
-        case actionTypes.GET_TOTAL_INFO_OF_SPECIES:
+        case actionTypes.SET_TOTAL_INFO_OF_SPECIES:
             return {
                 ...state,
-                totalInfo: {...action.payload}
+                totalInfo: {...action.payload},
             }
         default:
             return state;

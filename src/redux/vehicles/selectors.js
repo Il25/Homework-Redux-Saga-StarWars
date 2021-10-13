@@ -1,1 +1,0 @@
-export const selectVehicles = (state) => state.vehicles.data;
